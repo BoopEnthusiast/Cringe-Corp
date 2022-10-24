@@ -5,7 +5,7 @@
 [sub_resource type="PhysicsMaterial" id=3]
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.204903, 0.198417, 0.203143 )
+extents = Vector3( 0.204903, 0.198417, 0.199103 )
 
 [sub_resource type="CubeMesh" id=5]
 
@@ -18,11 +18,11 @@ transform = Transform( 51.5134, 0, 0, 0, 1, 0, 0, 0, 27.2395, 0, 0, 0 )
 physics_material_override = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
-transform = Transform( 4.97334, 0, 0, 0, 1, 0, 0, 0, 5.07058, 0, 0, 0 )
+transform = Transform( 4.80435, 0, 0, 0, 1, 0, 0, 0, 5.07058, 0, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 0.236153, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 5 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 1 )]
