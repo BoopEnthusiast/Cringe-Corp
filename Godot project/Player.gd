@@ -3,8 +3,9 @@ extends KinematicBody
 var speed = 7
 var slide_speed = 50
 const ACCEL_DEFAULT = 7
+const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
-const ACCEL_SLIDE = 1000
+const ACCEL_SLIDE = 1
 onready var accel = ACCEL_DEFAULT
 var gravity = 9.8
 var jump = 5
@@ -72,7 +73,8 @@ func _physics_process(delta):
 		if sliding == false:
 			slide_speed = 50
 		sliding = true
-		slide_speed -= 1
+		if slide_speed > 0:
+			slide_speed -= ACCEL_SLIDE
 		
 		
 	
@@ -86,4 +88,5 @@ func _physics_process(delta):
 		velocity = velocity.linear_interpolate(direction * slide_speed, accel * delta)
 	movement = velocity + gravity_vec
 	print(slide_speed)
+	print(speed)
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
