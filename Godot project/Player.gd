@@ -11,6 +11,8 @@ var gravity = 9.8
 var jump = 5
 var sliding = false
 
+var testing
+
 var cam_accel = 40
 var mouse_sense = 0.1
 var snap
@@ -52,6 +54,10 @@ func _physics_process(delta):
 	var h_input = 0
 	if not sliding:
 		h_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	direction = Vector3.ZERO
+	direction = Vector3(h_input, 0, f_input).rotated(Vector3.UP, h_rot).normalized()
+	if sliding:
+		direction = Vector3(h_input, 0, -1).rotated(Vector3.UP, h_rot).normalized()
 	
 	#jumping and gravity
 	if is_on_floor():
@@ -68,25 +74,23 @@ func _physics_process(delta):
 		gravity_vec = Vector3.UP * jump
 	if Input.is_action_just_released("slide"):
 		sliding = false
-	if Input.is_action_pressed("slide") and is_on_floor(): 
+	if direction[0] > 0.2 and direction[0] < -0.2:
+		testing = true 
+	if Input.is_action_pressed("slide") and is_on_floor() and testing:
 		snap = Vector3.ZERO
 		if sliding == false:
 			slide_speed = 50
+			var hsdoihaf
 		sliding = true
 		if slide_speed > 0:
 			slide_speed -= ACCEL_SLIDE
-		
-		
 	
 	#make it move
-	direction = Vector3.ZERO
-	direction = Vector3(h_input, 0, f_input).rotated(Vector3.UP, h_rot).normalized()
-	if sliding:
-		direction = Vector3(h_input, 0, -1).rotated(Vector3.UP, h_rot).normalized()
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 	if sliding:
 		velocity = velocity.linear_interpolate(direction * slide_speed, accel * delta)
 	movement = velocity + gravity_vec
 	print(slide_speed)
 	print(speed)
+	print(direction)
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
