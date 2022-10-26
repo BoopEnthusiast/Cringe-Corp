@@ -6,6 +6,7 @@ const ACCEL_DEFAULT = 7
 const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
 const ACCEL_SLIDE = 1
+const MIN_VELOCITY = 1
 onready var accel = ACCEL_DEFAULT
 var gravity = 9.8
 var jump = 5
@@ -74,13 +75,12 @@ func _physics_process(delta):
 		gravity_vec = Vector3.UP * jump
 	if Input.is_action_just_released("slide"):
 		sliding = false
-	if direction[0] > 0.2 and direction[0] < -0.2:
+	if velocity[0] > 0.2 and direction[0] < -0.2:
 		testing = true 
-	if Input.is_action_pressed("slide") and is_on_floor() and testing:
+	if Input.is_action_pressed("slide") and is_on_floor():
 		snap = Vector3.ZERO
 		if sliding == false:
 			slide_speed = 50
-			var hsdoihaf
 		sliding = true
 		if slide_speed > 0:
 			slide_speed -= ACCEL_SLIDE
@@ -91,6 +91,6 @@ func _physics_process(delta):
 		velocity = velocity.linear_interpolate(direction * slide_speed, accel * delta)
 	movement = velocity + gravity_vec
 	print(slide_speed)
-	print(speed)
-	print(direction)
+	print(velocity)
+# warning-ignore:return_value_discarded
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
