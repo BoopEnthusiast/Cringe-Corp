@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 
@@ -10,6 +10,10 @@ extents = Vector3( 0.204903, 0.198417, 0.199103 )
 [sub_resource type="CubeMesh" id=5]
 
 [sub_resource type="CapsuleShape" id=2]
+
+[sub_resource type="MeshLibrary" id=6]
+
+[sub_resource type="PhysicsMaterial" id=7]
 
 [node name="Spatial" type="Spatial"]
 
@@ -39,6 +43,8 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00479031, 1.08764, -0.000983238 )
 
 [node name="GridMap" type="GridMap" parent="."]
+mesh_library = SubResource( 6 )
+physics_material = SubResource( 7 )
 __meta__ = {
 "_editor_clip_": 0
 }
