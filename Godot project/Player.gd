@@ -4,14 +4,16 @@ var speed = 7
 const ACCEL_DEFAULT = 7
 const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
-const ACCEL_SLIDE = 50
 const MIN_VELOCITY = 1
+const FRICTION = 0.5
+const CROUCHING_SPEED = -5
 onready var accel = ACCEL_DEFAULT
 var gravity = 9.8
 var jump = 5
 var sliding = false
+var accel_slide = 50
+var crouching = false
 
-var testing
 
 var cam_accel = 40
 var mouse_sense = 0.1
@@ -60,7 +62,7 @@ func _physics_process(delta):
 		direction = Vector3(h_input, 0, -1).rotated(Vector3.UP, h_rot).normalized()
 	
 	#jumping and gravity
-	if is_on_floor() and not Input.is_action_pressed("slide"):
+	if is_on_floor():
 		snap = -get_floor_normal()
 		accel = ACCEL_DEFAULT
 		gravity_vec = Vector3.ZERO
@@ -69,23 +71,34 @@ func _physics_process(delta):
 		accel = ACCEL_AIR
 		gravity_vec += Vector3.DOWN * gravity * delta
 		
+	#jumping and sliding
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		snap = Vector3.ZERO
 		gravity_vec = Vector3.UP * jump
-	if Input.is_action_just_released("slide"):
-		sliding = false
-	if velocity[0] > 0.2 and direction[0] < -0.2:
-		testing = true 
-	if Input.is_action_pressed("slide") and is_on_floor():
+	if Input.is_action_pressed("crouch") and is_on_floor():
 		snap = Vector3.ZERO
 		sliding = true
-		accel = ACCEL_SLIDE
-		gravity_vec = Vector3.ZERO
+		accel = accel_slide
+		if accel_slide > 3:
+			accel_slide -= FRICTION
+		elif accel_slide <= 3:
+			crouching = true
+			sliding = false
+	if Input.is_action_pressed("crouch") and is_on_floor() and crouching == true:
+		speed = 5
+		accel = CROUCHING_SPEED
+	if Input.is_action_just_released("crouch"):
+		sliding = false
+		crouching = false
+		accel_slide = 50
+		speed = 7
 	
 	#make it move
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 	movement = velocity + gravity_vec
-	print(velocity)
-	print(accel)
 # warning-ignore:return_value_discarded
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
+	
+	#debugging
+	print(velocity)
+	print(accel)
