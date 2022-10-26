@@ -37,3 +37,8 @@ disabled = true
 
 [node name="Camera" type="Camera" parent="KinematicBody/KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00479031, 1.08764, -0.000983238 )
+
+[node name="GridMap" type="GridMap" parent="."]
+__meta__ = {
+"_editor_clip_": 0
+}

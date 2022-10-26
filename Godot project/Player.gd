@@ -1,11 +1,10 @@
 extends KinematicBody
 
 var speed = 7
-var slide_speed = 50
 const ACCEL_DEFAULT = 7
 const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
-const ACCEL_SLIDE = 1
+const ACCEL_SLIDE = 50
 const MIN_VELOCITY = 1
 onready var accel = ACCEL_DEFAULT
 var gravity = 9.8
@@ -61,7 +60,7 @@ func _physics_process(delta):
 		direction = Vector3(h_input, 0, -1).rotated(Vector3.UP, h_rot).normalized()
 	
 	#jumping and gravity
-	if is_on_floor():
+	if is_on_floor() and not Input.is_action_pressed("slide"):
 		snap = -get_floor_normal()
 		accel = ACCEL_DEFAULT
 		gravity_vec = Vector3.ZERO
@@ -79,18 +78,14 @@ func _physics_process(delta):
 		testing = true 
 	if Input.is_action_pressed("slide") and is_on_floor():
 		snap = Vector3.ZERO
-		if sliding == false:
-			slide_speed = 50
 		sliding = true
-		if slide_speed > 0:
-			slide_speed -= ACCEL_SLIDE
+		accel = ACCEL_SLIDE
+		gravity_vec = Vector3.ZERO
 	
 	#make it move
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
-	if sliding:
-		velocity = velocity.linear_interpolate(direction * slide_speed, accel * delta)
 	movement = velocity + gravity_vec
-	print(slide_speed)
 	print(velocity)
+	print(accel)
 # warning-ignore:return_value_discarded
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
