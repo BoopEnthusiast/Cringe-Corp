@@ -12,13 +12,14 @@ extents = Vector3( 0.204903, 0.198417, 0.199103 )
 [sub_resource type="CapsuleShape" id=2]
 
 [sub_resource type="MeshLibrary" id=6]
+resource_local_to_scene = true
 
 [sub_resource type="PhysicsMaterial" id=7]
 
 [node name="Spatial" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
-transform = Transform( 51.5134, 0, 0, 0, 1, 0, 0, 0, 27.2395, 0, 0, 0 )
+transform = Transform( 326.458, 0, 0, 0, 1, 0, 0, 0, 549.763, 0, 0, 0 )
 physics_material_override = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
@@ -43,6 +44,7 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00479031, 1.08764, -0.000983238 )
 
 [node name="GridMap" type="GridMap" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29.7919 )
 mesh_library = SubResource( 6 )
 physics_material = SubResource( 7 )
 __meta__ = {

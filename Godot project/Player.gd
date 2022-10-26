@@ -4,7 +4,6 @@ var speed = 7
 const ACCEL_DEFAULT = 7
 const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
-const MIN_VELOCITY = 1
 const FRICTION = 0.5
 const CROUCHING_SPEED = -5
 onready var accel = ACCEL_DEFAULT
@@ -85,20 +84,17 @@ func _physics_process(delta):
 			crouching = true
 			sliding = false
 	if Input.is_action_pressed("crouch") and is_on_floor() and crouching == true:
-		speed = 5
-		accel = CROUCHING_SPEED
+		accel = 0
 	if Input.is_action_just_released("crouch"):
 		sliding = false
 		crouching = false
 		accel_slide = 50
 		speed = 7
-	
 	#make it move
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 	movement = velocity + gravity_vec
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
 	
 	#debugging
-	print(velocity)
-	print(accel)
+	print(delta)
