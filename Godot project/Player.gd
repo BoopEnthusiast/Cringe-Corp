@@ -74,11 +74,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		snap = Vector3.ZERO
 		gravity_vec = Vector3.UP * jump
-	if Input.is_action_pressed("crouch") and is_on_floor():
+	if Input.is_action_pressed("crouch") and is_on_floor() and crouching == false:
 		snap = Vector3.ZERO
-		sliding = true
 		accel = accel_slide
 		if accel_slide > 3:
+			sliding = true
 			accel_slide -= FRICTION
 		elif accel_slide <= 3:
 			crouching = true
@@ -97,4 +97,8 @@ func _physics_process(delta):
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
 	
 	#debugging
-	print(delta)
+#	print(delta)
+#	print(velocity)
+	print(accel_slide)
+	print("^ is accel_slide")
+	print(accel)

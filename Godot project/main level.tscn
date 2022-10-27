@@ -23,11 +23,11 @@ transform = Transform( 326.458, 0, 0, 0, 1, 0, 0, 0, 549.763, 0, 0, 0 )
 physics_material_override = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
-transform = Transform( 4.80435, 0, 0, 0, 1, 0, 0, 0, 5.07058, 0, 0, 0 )
+transform = Transform( 0.322864, 0, 0, 0, 0.999999, 0, 0, 0, 0.211042, 0, 0, 0 )
 shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
-transform = Transform( 1, 0, 0, 0, 0.236153, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 0.0672025, 0, 0, 0, 0.236153, 0, 0, 0, 0.0416208, 0, 0, 0 )
 mesh = SubResource( 5 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 1 )]
