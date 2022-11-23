@@ -4,14 +4,9 @@ var speed = 7
 const ACCEL_DEFAULT = 7
 const DECCEL_DEFAULT = 1
 const ACCEL_AIR = 1
-const FRICTION = 0.5
-const CROUCHING_SPEED = -5
 onready var accel = ACCEL_DEFAULT
 var gravity = 9.8
 var jump = 5
-var sliding = false
-var accel_slide = 50
-var crouching = false
 
 
 var cam_accel = 40
@@ -52,13 +47,9 @@ func _physics_process(delta):
 	#get keyboard input
 	var h_rot = global_transform.basis.get_euler().y
 	var f_input = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
-	var h_input = 0
-	if not sliding:
-		h_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	var h_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	direction = Vector3.ZERO
 	direction = Vector3(h_input, 0, f_input).rotated(Vector3.UP, h_rot).normalized()
-	if sliding:
-		direction = Vector3(h_input, 0, -1).rotated(Vector3.UP, h_rot).normalized()
 	
 	#jumping and gravity
 	if is_on_floor():
@@ -69,27 +60,13 @@ func _physics_process(delta):
 		snap = Vector3.DOWN
 		accel = ACCEL_AIR
 		gravity_vec += Vector3.DOWN * gravity * delta
-		
-	#jumping and sliding
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		snap = Vector3.ZERO
 		gravity_vec = Vector3.UP * jump
-	if Input.is_action_pressed("crouch") and is_on_floor() and crouching == false:
-		snap = Vector3.ZERO
-		accel = accel_slide
-		if accel_slide > 3:
-			sliding = true
-			accel_slide -= FRICTION
-		elif accel_slide <= 3:
-			crouching = true
-			sliding = false
-	if Input.is_action_pressed("crouch") and is_on_floor() and crouching == true:
-		accel = 0
-	if Input.is_action_just_released("crouch"):
-		sliding = false
-		crouching = false
-		accel_slide = 50
-		speed = 7
+	#dash
+	
+	#insert dashing shit here
+	
 	#make it move
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 	movement = velocity + gravity_vec
@@ -99,6 +76,4 @@ func _physics_process(delta):
 	#debugging
 #	print(delta)
 #	print(velocity)
-	print(accel_slide)
-	print("^ is accel_slide")
 	print(accel)
