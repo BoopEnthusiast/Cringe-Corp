@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://MeshLibrary.tres" type="MeshLibrary" id=2]
 
 [sub_resource type="PhysicsMaterial" id=3]
 
@@ -10,11 +11,6 @@ extents = Vector3( 0.204903, 0.198417, 0.199103 )
 [sub_resource type="CubeMesh" id=5]
 
 [sub_resource type="CapsuleShape" id=2]
-
-[sub_resource type="MeshLibrary" id=6]
-resource_local_to_scene = true
-
-[sub_resource type="PhysicsMaterial" id=7]
 
 [node name="Spatial" type="Spatial"]
 
@@ -44,9 +40,10 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00479031, 1.08764, -0.000983238 )
 
 [node name="GridMap" type="GridMap" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29.7919 )
-mesh_library = SubResource( 6 )
-physics_material = SubResource( 7 )
+mesh_library = ExtResource( 2 )
+data = {
+"cells": PoolIntArray( 2, 10, 0, 3, 10, 0, 0, 11, 0, 1, 11, 0, 2, 11, 0, 65521, 11, 0, 0, 12, 0, 2, 12, 0, 65521, 12, 0, 65522, 12, 0, 65533, 12, 0, 65534, 12, 0, 65535, 12, 0, 0, 13, 0, 1, 13, 0, 65522, 13, 0, 65523, 13, 0, 65524, 13, 0, 65529, 13, 0, 65530, 13, 0, 65532, 13, 0, 65533, 13, 0, 65534, 13, 0, 65535, 13, 0, 65525, 14, 0, 65526, 14, 0, 65527, 14, 0, 65532, 14, 0, 65533, 14, 0, 65534, 14, 0, 65535, 14, 0 )
+}
 __meta__ = {
 "_editor_clip_": 0
 }
